@@ -8,7 +8,7 @@ import java.io.*;
 
 public class TranscriptUpload {
 
-	public static void uploadFile()
+	public void uploadFile()
 	{
 		String filename = null;
 		try
@@ -23,5 +23,12 @@ public class TranscriptUpload {
 			System.out.println(filename);
 		}
 	}
+	
+	public static void main(String[] args)
+	{
+		uploadFile()
+	}
 
 }
+
+
