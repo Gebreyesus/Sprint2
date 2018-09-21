@@ -1,3 +1,4 @@
+# Chase Strickler
 # I'm following the tutorial from freeCodeCamp found here: https://medium.freecodecamp.org/how-to-scrape-websites-with-python-and-beautifulsoup-5946935d93fe
 # to learn how to scrape data from the web, specifically courses.
 
