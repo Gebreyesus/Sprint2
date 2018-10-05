@@ -8,7 +8,7 @@ import java.io.*;
 
 public class TranscriptUpload {
 
-	public static void uploadFile()
+	public static String uploadFile()
 	{
 		String filename = null;
 	
@@ -18,5 +18,7 @@ public class TranscriptUpload {
 		filename = dialog.getFile();
 		
 		System.out.println(filename);
+		
+		return filename;
 	}
 }
