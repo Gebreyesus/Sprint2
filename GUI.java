@@ -9,6 +9,10 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+// By: Olson Thao
+// pulls up the gui and  able to select files by no additional functionality is added to it. still need to
+// figure out other methods.
+
 public class GUI extends JFrame{
 
     JButton transcript = new JButton("Upload Transcript");
