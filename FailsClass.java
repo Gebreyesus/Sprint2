@@ -29,25 +29,98 @@ import java.lang.*;
 // Can also be used as which classes a user needs to take
 public class FailsClass {
 
-	public static void main(String[] args) throws IOException {
-		//Replace with own file paths when testing
-		//First file MUST be transcript
-		//Path firstFile = Paths.get("/Users/erikayavaca/Desktop/workspace/CourseTest/src/Courselist.txt");
-		//Path secondFile = Paths.get("/Users/erikayavaca/Desktop/workspace/CourseTest/src/Transcript.txt");
-		GUI window = new GUI();
-		window.setVisible(true);
+	static final String abbreviations = "CSC MAT ENL AIS COM PSY ANT CCS SOC THR WST"
+			+ " POL ART HIS ECO PHI BUS FIN BIO HPE EDC EED CHM SPE SWK"
+			+ " ENV PHY HON KEY MIS MKT HUM RLN THR MUS SPA MUE ACC SCI"
+			+ " NUR NMS FLM THP URB YST REL AUG";
 
-		String transcript = args[0];
-		String listing = args[1];
-		Map<String, Integer> abbreviations = new HashMap<>();
-		Map<String, Integer> courses = new HashMap<>();		// Holds courses taken in major(2), other courses taken (1), and courses available (0)
-		fillAbbrev(abbreviations);
-		formatTranscript(courses, abbreviations, transcript);
-		compareListingToTranscript(courses, listing);
-		printResults(courses);
+	public static void main(String[] args) throws IOException {
+		//GUI does not call any of the code yet
+//		GUI window = new GUI();
+//		window.setVisible(true);
+
+
+		//REMOVE COMMENT IF WANT TO RUN FROM COMMAND LINE
+		File transcript = new File(args[0]);
+		File degree = new File(args[1]);
+		//File transcript = new File("Transcript-2.txt");
+		//File degree = new File("majorrequirements.txt");
+
+		readFile(transcript, "transcript.txt");
+		readFile(degree, "degree.txt");
+
+		Path firstFile = Paths.get("degree.txt");
+		Path secondFile = Paths.get("transcript.txt");
+
+		List<String> firstFileContent = Files.readAllLines(firstFile, Charset.defaultCharset());
+		List<String> secondFileContent = Files.readAllLines(secondFile, Charset.defaultCharset());
+		System.out.println("You still need to take the following classes: " + diffFiles(firstFileContent,secondFileContent));
+		System.out.println("these are extra classes you took: " + diffFiles(secondFileContent,firstFileContent));
+
+}
+
+	/**
+	 * Reads a file and "outputs a text file containing the course abbreviations
+	 * in a nice format."
+	 *
+	 * @param a the text file to scan through and retrieve course abbreviations
+	 */
+	/* This method will scan the text file word by word and ONLY compare
+	the word to the abbreviations IF AND ONLY IF the scanned word has a length
+	of between 6 and 7. */
+	public static void readFile(File a, String nameOfFile) {
+		Scanner scanLine = null;
+		Scanner abbreviationList = null;
+
+		try {
+			scanLine = new Scanner(a);
+		} catch (Exception e) {
+			System.out.println("File not found");
+			System.exit(1);
+		}
+
+		createFile(nameOfFile, scanLine, abbreviationList);
 	}
 
-	public static void compareListingToTranscript(Map<String, Integer> hm, String s){
+	/**
+	 * This method will create a text file and store in neatly,
+	 * the course's abbreviations.
+	 *
+	 * @param nameOfFile       the name of the file being created
+	 * @param scanLine         the Scanner for the text file
+	 * @param abbreviationList the Scanner for abbreviations String
+	 */
+	public static void createFile(String nameOfFile, Scanner scanLine, Scanner abbreviationList) {
+		try {
+			FileWriter writeToFile = new FileWriter(nameOfFile);
+			BufferedWriter out = new BufferedWriter(writeToFile);
+
+			while (scanLine.hasNext()) {
+				String word = scanLine.next();
+				//System.out.println("String word: " + word); //Testing purpose, uncheck if you want to see how it works
+				abbreviationList = new Scanner(abbreviations);
+
+				//only check words with length between 6-7
+				while (abbreviationList.hasNext() && word.length() >= 6 && word.length() <= 7) {
+					String courseAbbrev = abbreviationList.next();
+
+					if (word.regionMatches(0, courseAbbrev, 0, 3)) {
+						out.write(word);
+						out.newLine();
+						break; //exit out 2nd loop if found a match
+					}
+				}
+			}
+			out.close();
+		} catch (IOException e) {
+			System.out.println("Error - IOException");
+		}
+
+		System.out.println(nameOfFile + " text file has been created.");
+	}
+
+	/*     Not functional for this at the moment.
+	public static void compareListingToTranscript(Map<String, Integer> hm, String s) {
 		Scanner sc = null;
 		try {
 			sc = new Scanner(new String(s));
@@ -57,7 +130,7 @@ public class FailsClass {
 		}
 
 		// This loop grabs the string in the listing and asks if it is already in the hash map
-		while(sc.hasNext()){
+		while (sc.hasNext()) {
 			String str = sc.next();
 			Integer count = hm.get(str);
 
@@ -65,100 +138,21 @@ public class FailsClass {
 		}
 		sc.close();
 	}
+	*/
 
-	/*
-	 * This function pulls the courses from the transcript and puts them in the hash map hm
-	 * @param s is the transcript.txt file
-	 * @param hm is the hash map containing the courses that the student has taken
-	 * @param abbrev is the hash map of containing the abbreviations of all classes
-	 */
-	public static void formatTranscript(Map<String, Integer> hm, Map<String, Integer> abbrev, String s) throws FileNotFoundException {
-		Scanner sc = null;
-		try {
-			File source = new File(s);
-			sc = new Scanner(source);
-		} catch (Exception e) {
-			System.out.println("File not found");
-			System.exit(1);
-		}
+	// function that prints out the differences in the 2 files
 
-		while(sc.hasNext()){
-			String str = sc.next();
-			String result = str.replaceAll("[^a-z,^A-Z]+", "");
-			// Put the string in the hash map. ? is ternary op, shorthand if-else.
-			// If the word hasn't appeared, add it and set value to one
-			// If it has, increase its count
-			System.out.println(result);
-			if(abbrev.containsKey(result)){
-				hm.put(str, 1);
-				System.out.println("hi");
+	public static List<String> diffFiles( List<String> firstFileContent,List<String> secondFileContent)
+	{
+		List<String> diff = new ArrayList<String>();
+		for (String line : firstFileContent) {
+			if (!secondFileContent.contains(line)) {
+				diff.add(line);
 			}
 		}
-		// Close file
-		sc.close();
+		return diff;
 	}
 
-	/*
-	 * This function manually adds all of the available abbreviations from the
-	 * university to cross check with the file we are reading in
-	 * @param hm is the hashmap for the abbreviated courses in the university's catalog
-	 */
-	public static void fillAbbrev(Map<String, Integer> hm) {
-		hm.put("CSC", 0);
-		hm.put("MAT", 0);
-		hm.put("ENL", 0);
-		hm.put("AIS", 0);
-		hm.put("COM", 0);
-		hm.put("PSY", 0);
-		hm.put("ANT", 0);
-		hm.put("CCS", 0);
-		hm.put("SOC", 0);
-		hm.put("THR", 0);
-		hm.put("WST", 0);
-		hm.put("POL", 0);
-		hm.put("ART", 0);
-		hm.put("HIS", 0);
-		hm.put("ECO", 0);
-		hm.put("PHI", 0);
-		hm.put("BUS", 0);
-		hm.put("FIN", 0);
-		hm.put("BIO", 0);
-		hm.put("HPE", 0);
-		hm.put("EDC", 0);
-		hm.put("EED", 0);
-		hm.put("CHM", 0);
-		hm.put("SPE", 0);
-		hm.put("SWK", 0);
-		hm.put("ENV", 0);
-		hm.put("PHY", 0);
-		hm.put("HON", 0);
-		hm.put("KEY", 0);
-		hm.put("MIS", 0);
-		hm.put("MKT", 0);
-		hm.put("HUM", 0);
-		hm.put("RLN", 0);
-		hm.put("THR", 0);
-		hm.put("MUS", 0);
-		hm.put("SPA", 0);
-		hm.put("MUE", 0);
-		hm.put("ACC", 0);
-		hm.put("SCI", 0);
-		hm.put("NUR", 0);
-		hm.put("NMS", 0);
-		hm.put("FLM", 0);
-		hm.put("THP", 0);
-		hm.put("URB", 0);
-		hm.put("YST", 0);
-	}
-
-	public static void printResults(Map<String, Integer> courseSuggestions){
-		for(Map.Entry<String, Integer> entry : courseSuggestions.entrySet()){
-			System.out.println("The word: " + entry.getKey()
-					+ " appears " + entry.getValue() + " times.");
-		}
-
-		System.out.println("If value is a 2, that is a class the user has taken within their major." +
-				"If value is a 1, that is a class they've taken outside of their major." +
-				"If value is a 0, that is a class in the student's major that they have not taken.");
-	}
 }
+
+
