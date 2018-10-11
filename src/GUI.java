@@ -2,6 +2,9 @@ import javax.swing.JFrame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -19,7 +22,7 @@ public class GUI extends JFrame{
     JButton major = new JButton("Upload Degree Checklist");
     JButton confirm = new JButton("Confirm");
     JLabel userOutput = new JLabel("You haven't uploaded a Transcript "
-            + "or a Degree Checklist");
+            + "or a Degree text file yet.");
 
     File file1 = null;
     File file2 = null;
@@ -63,25 +66,22 @@ public class GUI extends JFrame{
             if( chooserSuccess == JFileChooser.APPROVE_OPTION) {
                 file1 = transcriptFile.getSelectedFile();
                 buttonT = true;
-                //need method to set transcript file (args[0]) to file.getAbsolutePath()
-                //example... setFile(file.getAbsolutePath());
+                
                 //will need a global variable in case checklist is added before transcript -- vice versa
                 if(buttonD.equals(false))
                 {
                     userOutput.setText("You have uploaded a Transcript " +
-                            "but not a Degree Checklist");
+                            "but not a Degree text file");
                 }
                 else
                 {
                     userOutput.setText("You have uploaded a Transcript " +
-                            "and a Degree Checklist");
+                            "and a Degree text file");
                 }
-
             }
             else {
-                userOutput.setText(userOutput.getText() + "\nUploading transcript file has been cancelled.");
+                userOutput.setText("Uploading Transcript file has been cancelled.");
             }
-
         }
     }
 
@@ -96,27 +96,22 @@ public class GUI extends JFrame{
             if( chooserSuccess == JFileChooser.APPROVE_OPTION) {
                 file2 = degreeFile.getSelectedFile();
                 buttonD = true;
-                //need method to set transcript file (args[0]) to file.getAbsolutePath()
-                //example... setFile(file.getAbsolutePath());
+                
                 //will need a global variable in case checklist is added before transcript -- vice versa
                 if(buttonT.equals(false))
                 {
                     userOutput.setText("You have not uploaded a Transcript " +
-                            "but have uploaded a Degree Checklist");
+                            "but have uploaded a Degree text file");
                 }
                 else
                 {
                     userOutput.setText("You have uploaded a Transcript " +
-                            "and a Degree Checklist");
+                            "and a Degree text file");
                 }
-
             }
             else {
-                System.out.println("Cancelled file chooser.");
+                userOutput.setText("Uploading Degree text file has been cancelled.");
             }
-			/*
-			 Call the method to grab a text file and put it in as args[0]
-			 */
         }
     }
 
@@ -125,7 +120,32 @@ public class GUI extends JFrame{
         //Overrides
         public void actionPerformed(ActionEvent c)
         {
-
+        	if(file1.equals(null) || file2.equals(null))
+        	{
+        		if(file1.equals(null) && file2.equals(null))
+        		{
+        			userOutput.setText("You haven't uploaded a Transcript"
+        					+ " or Degree text file yet.");
+        		}
+        		else if(file1.equals(null))
+        		{
+        			userOutput.setText("You haven't uploaded a Degree text"
+        					+ " file yet.");
+        		}
+        		else
+        		{
+        			userOutput.setText("You haven't uploaded a Transcript"
+        					+ " text file yet.");
+        		}
+        	}
+        	else
+        	{
+        		FailsClass.readFile(file1, "transcript.txt");
+            	FailsClass.readFile(file2, "degree.txt");
+            	//read generated files and compare them
+            	FailsClass.compareTranscriptAndDegree();
+            	userOutput.setText("Your output is located in the console.");
+        	}
         }
     }
 

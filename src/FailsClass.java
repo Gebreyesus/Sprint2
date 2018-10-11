@@ -35,30 +35,51 @@ public class FailsClass {
 			+ " NUR NMS FLM THP URB YST REL AUG";
 
 	public static void main(String[] args) throws IOException {
-		//GUI does not call any of the code yet
-//		GUI window = new GUI();
-//		window.setVisible(true);
-
+		GUI window = new GUI();
+		window.setVisible(true);
 
 		//REMOVE COMMENT IF WANT TO RUN FROM COMMAND LINE
-		//File transcript = new File(args[0]);
-		//File degree = new File(args[1]);
-		File transcript = new File("/Users/erikayavaca/IdeaProjects/csc395-project-1/TranscriptTest.txt");
-		File degree = new File("/Users/erikayavaca/IdeaProjects/csc395-project-1/CSCDegree.txt");
+//		File transcript = new File(args[0]);
+//		File degree = new File(args[1]);
 
-		readFile(transcript, "transcript.txt");
-		readFile(degree, "degree.txt");
+//		readFile(transcript, "transcript.txt");
+//		readFile(degree, "degree.txt");
 
-		Path firstFile = Paths.get("degree.txt");
-		Path secondFile = Paths.get("transcript.txt");
+		
+		
+//		Path firstFile = Paths.get("degree.txt");
+//		Path secondFile = Paths.get("transcript.txt");
 
-		List<String> firstFileContent = Files.readAllLines(firstFile, Charset.defaultCharset());
-		List<String> secondFileContent = Files.readAllLines(secondFile, Charset.defaultCharset());
-		System.out.println("classes you still need: " + diffFiles(firstFileContent, secondFileContent));
-		System.out.println("these are extra classes you took: " + diffFiles(secondFileContent,firstFileContent));
-		System.out.println("classes tha counted for your major: " + sameFiles(firstFileContent, secondFileContent));
+//		List<String> firstFileContent = Files.readAllLines(firstFile, Charset.defaultCharset());
+//		List<String> secondFileContent = Files.readAllLines(secondFile, Charset.defaultCharset());
+//		System.out.println("classes you still need: " + diffFiles(firstFileContent, secondFileContent));
+//		System.out.println("these are extra classes you took: " + diffFiles(secondFileContent,firstFileContent));
+//		System.out.println("classes that counted for your major: " + sameFiles(firstFileContent, secondFileContent));
 
 }
+	
+	public static void compareTranscriptAndDegree()
+	{
+		Path firstFile = Paths.get("degree.txt");
+		Path secondFile = Paths.get("transcript.txt");
+		List<String> firstFileContent = null;
+		List<String> secondFileContent = null;
+		
+		try 
+		{
+			firstFileContent = Files.readAllLines(firstFile, Charset.defaultCharset());
+			secondFileContent = Files.readAllLines(secondFile, Charset.defaultCharset());
+		} 
+		catch (IOException e) 
+		{
+			//change println to reflect problem more clearer -Olson
+			System.out.println("One of the uploaded files were empty.");
+		}
+		
+		System.out.println("Classes completed in the degree: " + sameFiles(firstFileContent, secondFileContent));
+		System.out.println("Classes still needed for degree: " + diffFiles(firstFileContent, secondFileContent));
+		System.out.println("Classes taken outside the degree requirement: " + diffFiles(secondFileContent,firstFileContent));
+	}
 
 	/**
 	 * Reads a file and "outputs a text file containing the course abbreviations
@@ -134,30 +155,12 @@ public class FailsClass {
 		System.out.println(nameOfFile + " text file has been created.");
 	}
 
-	/*     Not functional for this at the moment.
-	public static void compareListingToTranscript(Map<String, Integer> hm, String s) {
-		Scanner sc = null;
-		try {
-			sc = new Scanner(new String(s));
-		} catch (Exception e) {
-			System.out.println("File not found");
-			System.exit(1);
-		}
-
-		// This loop grabs the string in the listing and asks if it is already in the hash map
-		while (sc.hasNext()) {
-			String str = sc.next();
-			Integer count = hm.get(str);
-
-			hm.put(str, (count == null) ? 1 : count + 1);
-		}
-		sc.close();
-	}
-	*/
-
 	// function that prints out the differences in the 2 files
 	public static List<String> diffFiles( List<String> firstFileContent,List<String> secondFileContent)
 	{
+//		List<String> firstFileContent = Files.readAllLines(firstFile, Charset.defaultCharset());
+//		List<String> secondFileContent = Files.readAllLines(secondFile, Charset.defaultCharset());
+		
 		List<String> diff = new ArrayList<String>();
 		for(String line : firstFileContent) {
 			if (!secondFileContent.contains(line)) {
