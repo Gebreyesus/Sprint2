@@ -41,10 +41,10 @@ public class FailsClass {
 
 
 		//REMOVE COMMENT IF WANT TO RUN FROM COMMAND LINE
-		File transcript = new File(args[0]);
-		File degree = new File(args[1]);
-		//File transcript = new File("Transcript-2.txt");
-		//File degree = new File("majorrequirements.txt");
+		//File transcript = new File(args[0]);
+		//File degree = new File(args[1]);
+		File transcript = new File("/Users/erikayavaca/IdeaProjects/csc395-project-1/TranscriptTest.txt");
+		File degree = new File("/Users/erikayavaca/IdeaProjects/csc395-project-1/CSCDegree.txt");
 
 		readFile(transcript, "transcript.txt");
 		readFile(degree, "degree.txt");
@@ -54,8 +54,9 @@ public class FailsClass {
 
 		List<String> firstFileContent = Files.readAllLines(firstFile, Charset.defaultCharset());
 		List<String> secondFileContent = Files.readAllLines(secondFile, Charset.defaultCharset());
-		System.out.println("You still need to take the following classes: " + diffFiles(firstFileContent,secondFileContent));
+		System.out.println("classes you still need: " + diffFiles(firstFileContent, secondFileContent));
 		System.out.println("these are extra classes you took: " + diffFiles(secondFileContent,firstFileContent));
+		System.out.println("classes tha counted for your major: " + sameFiles(firstFileContent, secondFileContent));
 
 }
 
@@ -155,18 +156,27 @@ public class FailsClass {
 	*/
 
 	// function that prints out the differences in the 2 files
-
 	public static List<String> diffFiles( List<String> firstFileContent,List<String> secondFileContent)
 	{
 		List<String> diff = new ArrayList<String>();
-		for (String line : firstFileContent) 
-		{
-			if (!secondFileContent.contains(line)) 
-			{
+		for(String line : firstFileContent) {
+			if (!secondFileContent.contains(line)) {
 				diff.add(line);
 			}
 		}
 		return diff;
+	}
+
+	// Function prints class that do count for the major
+	public static List<String> sameFiles( List<String> firstFileContent,List<String> secondFileContent)
+	{
+		List<String> same = new ArrayList<String>();
+		for(String line : firstFileContent) {
+			if (secondFileContent.contains(line)) {
+				same.add(line);
+			}
+		}
+		return same;
 	}
 
 }
