@@ -72,9 +72,12 @@ public class FailsClass {
 		Scanner scanLine = null;
 		Scanner abbreviationList = null;
 
-		try {
+		try 
+		{
 			scanLine = new Scanner(a);
-		} catch (Exception e) {
+		} 
+		catch (Exception e) 
+		{
 			System.out.println("File not found");
 			System.exit(1);
 		}
@@ -95,16 +98,25 @@ public class FailsClass {
 			FileWriter writeToFile = new FileWriter(nameOfFile);
 			BufferedWriter out = new BufferedWriter(writeToFile);
 
-			while (scanLine.hasNext()) {
+			while (scanLine.hasNext()) 
+			{
 				String word = scanLine.next();
+				if (word.endsWith(","))
+				{
+					word = word.substring(0, word.length() - 1);
+				}
+				
 				//System.out.println("String word: " + word); //Testing purpose, uncheck if you want to see how it works
 				abbreviationList = new Scanner(abbreviations);
 
 				//only check words with length between 6-7
-				while (abbreviationList.hasNext() && word.length() >= 6 && word.length() <= 7) {
+				while (abbreviationList.hasNext() && word.length() >= 6 && word.length() <= 7) 
+				{
 					String courseAbbrev = abbreviationList.next();
+					courseAbbrev.replace(",", "");
 
-					if (word.regionMatches(0, courseAbbrev, 0, 3)) {
+					if (word.regionMatches(0, courseAbbrev, 0, 3)) 
+					{
 						out.write(word);
 						out.newLine();
 						break; //exit out 2nd loop if found a match
@@ -112,7 +124,9 @@ public class FailsClass {
 				}
 			}
 			out.close();
-		} catch (IOException e) {
+		} 
+		catch (IOException e) 
+		{
 			System.out.println("Error - IOException");
 		}
 
@@ -145,8 +159,10 @@ public class FailsClass {
 	public static List<String> diffFiles( List<String> firstFileContent,List<String> secondFileContent)
 	{
 		List<String> diff = new ArrayList<String>();
-		for (String line : firstFileContent) {
-			if (!secondFileContent.contains(line)) {
+		for (String line : firstFileContent) 
+		{
+			if (!secondFileContent.contains(line)) 
+			{
 				diff.add(line);
 			}
 		}
