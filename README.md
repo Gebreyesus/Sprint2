@@ -16,7 +16,7 @@ First Authors:
 
 
 Second Authors:
-- Chase Strickler
-- Olson Thao
-- Jackson Nelson
-- Erik Ayavaca-Tirado
+- Joseph Miller
+- Timly Moua
+- Brandon Ly
+- Beteab Gebru
