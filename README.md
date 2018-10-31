@@ -1,4 +1,4 @@
-# Java -> C#/.NET Project #
+﻿# Java -> C#/.NET Project #
 
 Purpose:
 
@@ -15,7 +15,7 @@ First Authors:
 - Erik Ayavaca-Tirado
 
 
-Second Authors:
+Second Authors:(Asp.net MVC Web Application)
 - Joseph Miller
 - Timly Moua
 - Brandon Ly
