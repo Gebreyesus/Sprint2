@@ -3,7 +3,11 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
+<<<<<<< HEAD
 namespace CursePLannerTwo.Models
+=======
+namespace CodingGround_Proj2.Models
+>>>>>>> 8a1e9e283bc5c2e9a4fb574e7f175ff9e54df197
 {
     public class IndexViewModel
     {

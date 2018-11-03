@@ -4,7 +4,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
+<<<<<<< HEAD
 namespace CursePLannerTwo.Models
+=======
+namespace CodingGround_Proj2.Models
+>>>>>>> 8a1e9e283bc5c2e9a4fb574e7f175ff9e54df197
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
