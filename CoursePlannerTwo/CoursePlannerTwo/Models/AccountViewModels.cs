@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace CodingGround_Proj2.Models
+namespace CoursePlannerTwo.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
