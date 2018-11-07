@@ -53,7 +53,7 @@ namespace CoursePlannerTwo.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,courseNumber,title,titleShort,description")] Course course)
+        public async Task<IActionResult> Create([Bind("id,name,credits,prereqs,courseNum,offeredIn,description,department")] Course course)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace CoursePlannerTwo.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,courseNumber,title,titleShort,description")] Course course)
+        public async Task<IActionResult> Edit(int id, [Bind("id,name,credits,prereqs,courseNum,offeredIn,description,department")] Course course)
         {
             if (id != course.id)
             {

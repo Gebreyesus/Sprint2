@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace CoursePlannerTwo.Models
 {
     public class CatalogContext : DbContext
-    {   
+    {
 
         public CatalogContext(DbContextOptions<CatalogContext> options) : base(options)
         {
@@ -20,12 +20,13 @@ namespace CoursePlannerTwo.Models
     public class Course
     {
         public int id { get; set; }
-        public int courseNumber { get; set; }
-        public string title { get; set; }
-        public string titleShort { get; set; }
+        public string name { get; set; }
+        public int credits { get; set; }
+        public string prereqs { get; set; }
+        public int courseNum { get; set; }
+        public string offeredIn { get; set; }
         public string description { get; set; }
-        public List<Course> prereqs;
+        public string department { get; set; }
 
-      
     }
 }
