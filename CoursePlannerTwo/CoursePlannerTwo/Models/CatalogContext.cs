@@ -19,10 +19,9 @@ namespace CoursePlannerTwo.Models
 
     public class Course
     {
-        public int id { get; set; }
-        public int courseNum { get; set; }
+        public int ID { get; set; }
+        public string courseNum { get; set; }
         public int credits { get; set; }
-        public int transcriptId { get; set; }
         public string name { get; set; }
         public string prereqs { get; set; }
         public string offeredIn { get; set; }

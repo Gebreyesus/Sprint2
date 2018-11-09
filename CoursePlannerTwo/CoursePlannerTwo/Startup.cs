@@ -19,6 +19,7 @@ namespace CoursePlannerTwo
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            Console.WriteLine("TEST1");
         }
 
         public IConfiguration Configuration { get; }

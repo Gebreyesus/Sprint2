@@ -35,7 +35,7 @@ namespace CoursePlannerTwo.Controllers
             }
 
             var course = await _context.courses
-                .FirstOrDefaultAsync(m => m.id == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (course == null)
             {
                 return NotFound();
@@ -89,7 +89,7 @@ namespace CoursePlannerTwo.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("id,name,credits,prereqs,courseNum,offeredIn,description,department")] Course course)
         {
-            if (id != course.id)
+            if (id != course.ID)
             {
                 return NotFound();
             }
@@ -103,7 +103,7 @@ namespace CoursePlannerTwo.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CourseExists(course.id))
+                    if (!CourseExists(course.ID))
                     {
                         return NotFound();
                     }
@@ -126,7 +126,7 @@ namespace CoursePlannerTwo.Controllers
             }
 
             var course = await _context.courses
-                .FirstOrDefaultAsync(m => m.id == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (course == null)
             {
                 return NotFound();
@@ -148,7 +148,7 @@ namespace CoursePlannerTwo.Controllers
 
         private bool CourseExists(int id)
         {
-            return _context.courses.Any(e => e.id == id);
+            return _context.courses.Any(e => e.ID == id);
         }
 
         public void ReadCourses(StreamReader file)
