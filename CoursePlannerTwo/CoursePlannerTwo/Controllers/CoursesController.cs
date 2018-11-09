@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CoursePlannerTwo.Models;
+using CsvHelper;
+using System.IO;
 
 namespace CoursePlannerTwo.Controllers
 {
@@ -147,6 +149,11 @@ namespace CoursePlannerTwo.Controllers
         private bool CourseExists(int id)
         {
             return _context.courses.Any(e => e.id == id);
+        }
+
+        public void ReadCourses(StreamReader file)
+        {
+            CsvReader csv = new CsvReader(file, true);
         }
     }
 }
